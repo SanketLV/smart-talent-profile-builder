@@ -14,6 +14,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    if (resumeFile.type !== "application/pdf") {
+      return NextResponse.json(
+        { success: false, message: "Only PDF files are supported" },
+        { status: 400 }
+      );
+    }
+
     const arrayBuffer = await resumeFile.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
