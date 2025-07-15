@@ -19,7 +19,10 @@ import { Separator } from "./ui/separator";
 
 const formSchema = z.object({
   instagramUrl: z.string().min(4),
-  file: z.file().mime(["application/pdf"]),
+  file: z.instanceof(File).refine(
+    (file) => file?.type === "application/pdf",
+    { message: "Only PDF files are allowed" }
+  ).optional(),
 });
 
 const UploadForm = () => {
